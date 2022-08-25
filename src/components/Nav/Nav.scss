@@ -1,0 +1,30 @@
+@import "../../index.scss";
+
+.nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    
+    border-bottom: 1px solid gray;
+
+    .navWrap {
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin: 30px 0;
+
+        .my {
+            font-size: 32px;
+            font-weight: 800;
+            color: $red;
+            margin-right: 43px;
+
+        }
+
+        .news {
+            color: black;
+        }
+    }
+}

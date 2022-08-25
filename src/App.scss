@@ -1,4 +1,18 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .AppContainer {
+    width: 80%;
+
+    .newsContainer {
+      display: flex;
+      flex-direction: row;
+    }
+    
+  }
+
+
 }
 

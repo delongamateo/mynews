@@ -1,0 +1,13 @@
+.latestNewsItem {
+    width: 100%;
+    border-bottom: 1px solid gray;
+    padding: 14px 0;
+
+    .time {
+        font-size: 10px;
+    }
+
+    .title {
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,9 @@
+.category {
+    width: 100%;
+
+    .articlesContainer {
+        display: grid;
+        gap: 20px;
+        grid-template: repeat(6, 1fr) / repeat(3, 1fr);
+    }
+}
