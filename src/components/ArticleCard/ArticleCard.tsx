@@ -1,17 +1,40 @@
+import { FC, useState, useEffect, useContext } from "react"
 import "./ArticleCard.scss"
+import { Article } from "../../types/types"
+import placeholderImage from "../../assets/placeholderImage.png"
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md"
+import { MyNewsContext, MyNewsInterface } from "../../Context/MyNewsContext"
 
-const ArticleCard = () => {
+type ArticleCardProps = {
+    article: Article
+}
+
+const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
+    const { title, section, byline, multimedia } = article
+    const myNewsContext = useContext(MyNewsContext)
+    const { handleFavoriteArticles, checkFavoritesArticles, favoriteArticles } = myNewsContext as MyNewsInterface;
+    const [isFavorite, setIsFavorite] = useState<number>(-1)
+
+    useEffect(() => {
+        setIsFavorite(checkFavoritesArticles(article))
+    }, [favoriteArticles])
+
+    const image = multimedia ? multimedia[1].url : placeholderImage
+
     return (
         <div className="articleCard">
-            <div className="image" />
-            <div className="titleContainer">
-                <div>
-                <p className="category">TECH</p>
-                <p className="title">Article title</p>
-                </div>
-                <p className="autor">Article Autor</p>
+            <div className="imageContainer">
+                <img src={image} className="articleImage" />
+                <button onClick={() => handleFavoriteArticles(article)} className="favoriteButton">{isFavorite >= 0 ? <MdFavorite /> : <MdFavoriteBorder />}</button>
             </div>
-            
+            <div className="titleAndAutorContainer">
+                <div className="titleContainer">
+                    <p className="categoryNameSmall">{section.toUpperCase()}</p>
+                    <p className="title">{title}</p>
+                </div>
+                <p className="autor">{byline}</p>
+            </div>
+
         </div>
     )
 }

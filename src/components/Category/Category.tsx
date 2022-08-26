@@ -1,24 +1,24 @@
-import React from 'react'
+import { useContext, useEffect } from 'react'
 import "./Category.scss"
 import ArticleCard from "../ArticleCard/ArticleCard"
 import LatestNews from '../LatestNews/LatestNews'
+import { MyNewsContext, MyNewsInterface } from "../../Context/MyNewsContext"
+import { useParams } from "react-router-dom"
 
 const Category = () => {
+    const myNewsContext = useContext(MyNewsContext)
+    const { articles, favoriteArticles } = myNewsContext as MyNewsInterface
+
+    const { category } = useParams()
+
     return (
         <div className='category'>
-            <p>News</p>
+            <p className="categoryTitle">News</p>
             <div className='articlesContainer'>
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
-                <ArticleCard />
+                {(category !== "favorites" ? articles : favoriteArticles)?.map((article) => (
+                    <ArticleCard article={article} />
+                ))}
                 <LatestNews />
-
             </div>
         </div>
     )

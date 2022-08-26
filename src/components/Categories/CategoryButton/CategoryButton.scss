@@ -12,6 +12,7 @@
     color: gray;
     border: none;
     border-radius: 6px;
+    margin-bottom: 4px;
 
     &:hover {
         color: $red;
@@ -24,4 +25,9 @@
     }
 
     
+}
+
+.selected {
+    color: $red;
+    background-color: white;
 }

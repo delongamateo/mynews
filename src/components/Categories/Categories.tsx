@@ -1,36 +1,50 @@
-import React from 'react'
+import { FC } from 'react'
 import { FaHome, FaNewspaper, FaBriefcase, FaHeartbeat, FaSyringe, FaBasketballBall, FaLaptopCode } from 'react-icons/fa';
+import { MdFavorite } from "react-icons/md"
 import CategoryButton from "./CategoryButton/CategoryButton"
 import "./Categories.scss"
+import { Category } from '../../types/types';
 
-const categoriesList = [
+const categoriesList: Category[] = [
     {
         name: "Home",
-        icon: <FaHome />
+        icon: <FaHome />,
+        value: "home"
     },
     {
         name: "General",
-        icon: <FaNewspaper />
+        icon: <FaNewspaper />,
+        value: "world"
     },
     {
         name: "Business",
-        icon: <FaBriefcase />
+        icon: <FaBriefcase />,
+        value: "business"
     },
     {
         name: "Health",
-        icon: <FaHeartbeat />
+        icon: <FaHeartbeat />,
+        value: "health"
     },
     {
         name: "Science",
-        icon: <FaSyringe />
+        icon: <FaSyringe />,
+        value: "science"
     },
     {
         name: "Sports",
-        icon: <FaBasketballBall />
+        icon: <FaBasketballBall />,
+        value: "sports"
     },
     {
         name: "Technology",
-        icon: <FaLaptopCode />
+        icon: <FaLaptopCode />,
+        value: "technology"
+    },
+    {
+        name: "Favorites",
+        icon: <MdFavorite />,
+        value: "favorites"
     },
 
 ]

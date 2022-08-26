@@ -66,6 +66,8 @@ const LatestNews = () => {
                     loader={<h4>Loading...</h4>}
                     hasMore={true}
                     scrollableTarget="latestNewsContainer"
+                    className="infiniteScroll"
+                    
                 >
                     {articles.map((article) => (
                         <LatestNewsItem article={article} />
