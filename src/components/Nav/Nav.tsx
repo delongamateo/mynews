@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react'
+import { useContext } from 'react'
 import "./Nav.scss"
 import MobileMenu from "./MobileMenu/MobileMenu"
 import SearchBar from "../SearchBar/SearchBar"

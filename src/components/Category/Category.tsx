@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import "./Category.scss"
 import ArticleCard from "../ArticleCard/ArticleCard"
 import LatestNews from '../LatestNews/LatestNews'

@@ -9,7 +9,7 @@ const ArticleDetail = () => {
         <div className="articleDetail">
             <h3 className="detailTitle">{article?.title}</h3>
             <div className="contentContainer">
-                <img src={article?.multimedia[1].url} className="contentImage"/>
+                <img src={article?.multimedia[1].url} alt="article" className="contentImage" />
                 <p>{article?.abstract}<a href={article?.url}>Read full article...</a></p>
             </div>
         </div>

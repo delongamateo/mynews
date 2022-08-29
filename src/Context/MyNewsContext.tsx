@@ -6,22 +6,16 @@ import { useNavigate } from "react-router-dom";
 export interface MyNewsInterface {
   fetchArticles: (category: string) => void;
   selectedCategory: string;
-
   searchArticles: Article[];
   articles: Article[];
   handleSearch: (term: string) => void;
-
   favoriteArticles: Article[];
-
   handleFavoriteArticles: (article: Article) => void;
   checkFavoritesArticles: (article: Article) => number;
-
   displayMobileMenu: string;
   handleMobileMenu: (display: string) => void;
-
   article: Article | undefined;
   handleArticleDetail: (article: Article) => void;
-
 }
 
 export const MyNewsContext = createContext<MyNewsInterface>({} as MyNewsInterface)
@@ -46,25 +40,18 @@ const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
 
     setSelectedCategory(category)
 
-    if (category === "favorites") {
-      navigate("/favorites")
-    } else {
-      axios.get(`https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${NYTapiKey}`)
-        .then(
-          (response) => {
-            setArticles(response.data.results)
-            setSearchArticles(response.data.results)
-          }
-        ).then(
-          () => navigate(`/${category !== "home" ? category : ""}`)
-        )
-        .catch(
-          (error) => console.log(error)
-        )
-    }
-
-    setDisplayMobileMenu("none")
-  }, [navigate])
+    if (category === "favorites") return;
+    axios.get(`https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${NYTapiKey}`)
+      .then(
+        (response) => {
+          setArticles(response.data.results)
+          setSearchArticles(response.data.results)
+        }
+      )
+      .catch(
+        (error) => console.log(error)
+      )
+  }, [setSelectedCategory, setArticles, setSearchArticles])
 
   useEffect(() => {
     fetchArticles(selectedCategory)

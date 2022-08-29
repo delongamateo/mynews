@@ -17,14 +17,14 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
 
     useEffect(() => {
         setIsFavorite(checkFavoritesArticles(article))
-    }, [favoriteArticles, articles, article])
+    }, [favoriteArticles, articles, article, checkFavoritesArticles])
 
     const image = multimedia ? multimedia[1].url : placeholderImage
 
     return (
         <div className="articleCard" onClick={() => handleArticleDetail(article)}>
             <div className="imageContainer">
-                <img src={image} className="articleImage" />
+                <img src={image} alt="article" className="articleImage" />
                 <button onClick={(e) => { e.stopPropagation(); handleFavoriteArticles(article) }} className="favoriteButton">
                     {isFavorite >= 0 ? <MdFavorite /> : <MdFavoriteBorder />}
                 </button>

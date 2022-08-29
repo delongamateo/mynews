@@ -1,4 +1,4 @@
-import { FC, useContext} from 'react'
+import { useContext } from 'react'
 import "./MobileMenu.scss"
 import SearchBar from "../../SearchBar/SearchBar"
 import Categories from '../../Categories/Categories'
@@ -7,7 +7,7 @@ import { MyNewsContext } from "../../../Context/MyNewsContext"
 
 const MobileMenu = () => {
     const myNewsContext = useContext(MyNewsContext)
-    const {handleMobileMenu, displayMobileMenu} = myNewsContext
+    const { handleMobileMenu, displayMobileMenu } = myNewsContext
 
     return (
         <div style={{ display: displayMobileMenu }} className="mobileMenu">
