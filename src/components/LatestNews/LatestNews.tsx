@@ -2,6 +2,7 @@ import React from 'react'
 import "./LatestNews.scss"
 import LatestNewsItem from "./LatestNewsItem/LatestNewsItem"
 import InfiniteScroll from 'react-infinite-scroll-component';
+import {MdKeyboardArrowRight} from "react-icons/md"
 
 const articles = [
     {
@@ -57,7 +58,7 @@ const LatestNews = () => {
                 <div className="bigDot">
                     <div className="smallDot" />
                 </div>
-                <p className='title'>Latest News</p>
+                <p className='latestNewsTitle'>Latest News</p>
             </div>
             <div id="latestNewsContainer">
                 <InfiniteScroll
@@ -75,7 +76,7 @@ const LatestNews = () => {
                 </InfiniteScroll>
             </div>
             <div className="seeAllContainer">
-                <button className="seeAllNews">See all news</button>
+                <button className="seeAllNews">See all news <MdKeyboardArrowRight/></button>
             </div>
         </div>
     )

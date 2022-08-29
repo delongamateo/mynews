@@ -1,18 +1,11 @@
+@import "./InterWeb/inter.scss";
+
 body {
   margin: 0;
   padding: 0;
   background-color: #F2F2F2;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: Inter;
 }
 
 p {
@@ -22,3 +15,4 @@ p {
 $red: #BB1E1E;
 $blue: #1E71BB;
 $gray: #1D1D1B;
+$borderColor: rgba(128, 128, 128, 0.1);

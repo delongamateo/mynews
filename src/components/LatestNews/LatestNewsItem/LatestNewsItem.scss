@@ -1,12 +1,14 @@
+@import "../../../index.scss";
+
 .latestNewsItem {
     width: 100%;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid $borderColor;
     padding: 14px 0;
 
     .time {
         font-size: 10px;
         font-weight: 600;
-        color: blue;
+        color: $blue;
     }
 
     .title {

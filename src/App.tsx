@@ -9,9 +9,10 @@ import {
   Route,
 } from "react-router-dom";
 import MyNewsProvider from "./Context/MyNewsContext"
+import ArticleDetail from './components/ArticleDetail/ArticleDetail';
 
 const App = () => {
-  
+
   return (
     <Router>
       <MyNewsProvider>
@@ -20,10 +21,13 @@ const App = () => {
           <div className="AppContainer">
             <Nav />
             <div className='newsContainer'>
-              <Categories />
+              <div className='desktopCategories'>
+                <Categories />
+              </div>
               <Routes>
                 <Route path="/" element={<Category />} />
                 <Route path="/:category" element={<Category />} />
+                <Route path="/:category/:article" element={<ArticleDetail />} />
               </Routes>
             </div>
           </div>

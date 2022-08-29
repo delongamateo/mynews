@@ -12,20 +12,22 @@ type ArticleCardProps = {
 const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
     const { title, section, byline, multimedia } = article
     const myNewsContext = useContext(MyNewsContext)
-    const { handleFavoriteArticles, checkFavoritesArticles, favoriteArticles } = myNewsContext as MyNewsInterface;
+    const { handleFavoriteArticles, checkFavoritesArticles, favoriteArticles, articles, handleArticleDetail } = myNewsContext as MyNewsInterface;
     const [isFavorite, setIsFavorite] = useState<number>(-1)
 
     useEffect(() => {
         setIsFavorite(checkFavoritesArticles(article))
-    }, [favoriteArticles])
+    }, [favoriteArticles, articles])
 
     const image = multimedia ? multimedia[1].url : placeholderImage
 
     return (
-        <div className="articleCard">
+        <div className="articleCard" onClick={() => handleArticleDetail(article)}>
             <div className="imageContainer">
                 <img src={image} className="articleImage" />
-                <button onClick={() => handleFavoriteArticles(article)} className="favoriteButton">{isFavorite >= 0 ? <MdFavorite /> : <MdFavoriteBorder />}</button>
+                <button onClick={(e) => { e.stopPropagation(); handleFavoriteArticles(article) }} className="favoriteButton">
+                    {isFavorite >= 0 ? <MdFavorite /> : <MdFavoriteBorder />}
+                </button>
             </div>
             <div className="titleAndAutorContainer">
                 <div className="titleContainer">

@@ -1,3 +1,5 @@
+@import "../../index.scss";
+
 .category {
     width: 100%;
     display: flex;
@@ -11,9 +13,64 @@
         margin-bottom: 16px;
     }
 
-    .articlesContainer {
+    .seTypeButtonsContainer {
+        display: none;
+    }
+
+    .articlesContainerDesktop {
         display: grid;
         gap: 20px;
         grid-template: repeat(6, 1fr) / repeat(3, 1fr);
+
+    }
+
+    .articlesContainerMobile {
+        display: none;
+    }
+
+    @media screen and (max-width: 768px) {
+        .articlesContainerDesktop {
+            display: none;
+        } 
+        
+        .articlesContainerMobile {
+            display: flex;
+            flex-direction: column;
+
+            .articleCardsContainer {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .hideType {
+                display: none;
+            }
+        }
+
+        .categoryTitle {
+            display: none;
+        }
+
+        .seTypeButtonsContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1em;
+            
+            .setType {
+                background-color: transparent;
+                border: none;
+                padding: 1em;
+                border-radius: 5em;
+                width: 6em;
+                font-size: 1em;
+                font-weight: 600;
+            }
+
+            .selectedType {
+                background-color: #BB1E1E1A;
+                color: $red;
+            }
+        }
     }
 }

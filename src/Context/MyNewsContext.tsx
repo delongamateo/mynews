@@ -1,5 +1,5 @@
 import { createContext, FC, SetStateAction, useState, Dispatch, useEffect } from "react";
-import { Article } from "../types/types";
+import { Article, SearchArticle } from "../types/types";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,15 @@ export interface MyNewsInterface {
   fetchArticles: (category: string) => void;
   handleFavoriteArticles: (article: Article) => void;
   checkFavoritesArticles: (article: Article) => number;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  searchArticles: Article[];
+  displayMenu: string;
+  setDisplayMenu: Dispatch<SetStateAction<string>>;
+  handleSearch: (term: string) => void;
+  searchQuery: string;
+  article: Article | undefined;
+  handleArticleDetail: (article: Article) => void;
+
 }
 
 export const MyNewsContext = createContext<MyNewsInterface>(undefined as any)
@@ -21,21 +30,39 @@ type MyNewsProviderProps = {
 
 const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("home")
+  const [searchQuery, setSearchQuery] = useState<string>("")
   const [favoriteArticles, setFavoriteArticles] = useState<Article[]>([])
   const [articles, setArticles] = useState<Article[]>([])
+  const [searchArticles, setSearchArticles] = useState<Article[]>([])
+  const [displayMenu, setDisplayMenu] = useState<string>("none")
+  const [article, setArticle] = useState<Article>()
 
   const navigate = useNavigate()
 
-  const apiKey = "ASGupdl6gvvEGxabXeEe8vnqmA7XlPuZ"
+  const NYTapiKey = "ASGupdl6gvvEGxabXeEe8vnqmA7XlPuZ"
+  const newsAPIkey = "32a31292b4574b8d8caf392fd5bfdbf4"
 
   const fetchArticles = (category: string) => {
     setSelectedCategory(category)
     if (category === "favorites") {
       navigate("/favorites")
-    } else {
-      axios.get(`https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${apiKey}`)
+    } else if (category === "search") {
+      /* axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchQuery}&api-key=${NYTapiKey}`)
         .then(
-          (response) => setArticles(response.data.results)
+          (response) => setSearchArticles(response.data.response.docs)
+        ).then(
+          () => navigate(`/search/${searchQuery}`)
+        )
+        .catch(
+          (error) => console.log(error)
+        ) */
+    } else {
+      axios.get(`https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${NYTapiKey}`)
+        .then(
+          (response) => {
+            setArticles(response.data.results)
+            setSearchArticles(response.data.results)
+          }
         ).then(
           () => navigate(`/${category !== "home" ? category : ""}`)
         )
@@ -43,6 +70,14 @@ const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
           (error) => console.log(error)
         )
     }
+    setDisplayMenu("none")
+  }
+
+  const handleSearch = (term: string) => {
+    let updatedArticles = searchArticles;
+    updatedArticles = updatedArticles.filter((article) => { return article.title.toLowerCase().indexOf(term.toLowerCase()) !== -1 }
+    )
+    setArticles(updatedArticles)
   }
 
   useEffect(() => {
@@ -63,8 +98,31 @@ const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
     }
   }
 
+  const handleArticleDetail = (article: Article) => {
+    setArticle(article)
+    navigate(`/${selectedCategory}/${article.published_date}`)
+  }
+
   return (
-    <MyNewsContext.Provider value={{ articles, selectedCategory, fetchArticles, favoriteArticles, setFavoriteArticles, handleFavoriteArticles, checkFavoritesArticles }}>
+    <MyNewsContext.Provider 
+      value={{ 
+        articles, 
+        selectedCategory, 
+        fetchArticles, 
+        favoriteArticles, 
+        setFavoriteArticles, 
+        handleFavoriteArticles, 
+        checkFavoritesArticles, 
+        setSearchQuery, 
+        searchArticles, 
+        displayMenu, 
+        setDisplayMenu, 
+        handleSearch, 
+        searchQuery,
+        article,
+        handleArticleDetail
+      }}
+    >
       {children}
     </MyNewsContext.Provider>
   )

@@ -9,6 +9,24 @@
     .newsContainer {
       display: flex;
       flex-direction: row;
+
+      .desktopCategories {
+        display: block;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 90%;
+
+      .newsContainer {
+
+        .desktopCategories {
+          display: none;
+        }
+
+      }
+
+
     }
     
   }
