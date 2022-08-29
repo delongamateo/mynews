@@ -1,0 +1,32 @@
+.articleDetail {
+    display: flex;
+    flex-direction: column;
+
+    .detailTitle {
+        font-size: 2em;
+        margin: 0;
+    }
+
+    .contentContainer {
+        display: flex;
+        flex-direction: row;
+        margin: 1em 0;
+
+        .contentImage {
+            margin-right: 1em;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+
+        .contentContainer {
+            flex-direction: column;
+
+            .contentImage {
+                margin-right: 0;
+                margin-bottom: 1em;
+                width: 100%;
+            }
+        }
+    }
+}

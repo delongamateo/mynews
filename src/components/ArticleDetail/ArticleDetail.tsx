@@ -6,15 +6,12 @@ const ArticleDetail = () => {
     const myNewsContext = useContext(MyNewsContext)
     const { article } = myNewsContext
     return (
-        <div>
-            <h3>{article?.title}</h3>
-            <div>
-                <img src={article?.multimedia[1].url} />
-                <p>{article?.abstract}</p>
-                <a href={article?.url}>Read full article...</a>
+        <div className="articleDetail">
+            <h3 className="detailTitle">{article?.title}</h3>
+            <div className="contentContainer">
+                <img src={article?.multimedia[1].url} className="contentImage"/>
+                <p>{article?.abstract}<a href={article?.url}>Read full article...</a></p>
             </div>
-
-
         </div>
     )
 }

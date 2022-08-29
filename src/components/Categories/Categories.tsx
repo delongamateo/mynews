@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import { FaHome, FaNewspaper, FaBriefcase, FaHeartbeat, FaSyringe, FaBasketballBall, FaLaptopCode } from 'react-icons/fa';
 import { MdFavorite } from "react-icons/md"
 import CategoryButton from "./CategoryButton/CategoryButton"
@@ -52,8 +51,8 @@ const categoriesList: Category[] = [
 const Categories = () => {
     return (
         <div className='categories'>
-            {categoriesList.map((category) => (
-                <CategoryButton category={category} />
+            {categoriesList.map((category, i) => (
+                <CategoryButton category={category} key={i} />
             ))}
         </div>
     )

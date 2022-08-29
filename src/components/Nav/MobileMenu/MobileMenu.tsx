@@ -7,12 +7,12 @@ import { MyNewsContext } from "../../../Context/MyNewsContext"
 
 const MobileMenu = () => {
     const myNewsContext = useContext(MyNewsContext)
-    const {setDisplayMenu, displayMenu} = myNewsContext
+    const {handleMobileMenu, displayMobileMenu} = myNewsContext
 
     return (
-        <div style={{ display: displayMenu }} className="mobileMenu">
+        <div style={{ display: displayMobileMenu }} className="mobileMenu">
             <div className="mobileMenuWrap">
-                <button className="closeMenu" onClick={() => setDisplayMenu("none")}><GrClose /></button>
+                <button className="closeMenu" onClick={() => handleMobileMenu("none")}><GrClose /></button>
                 <p className='my'>My<span className="news">News</span></p>
                 <SearchBar />
                 <Categories />

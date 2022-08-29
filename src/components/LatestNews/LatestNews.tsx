@@ -1,57 +1,51 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import "./LatestNews.scss"
 import LatestNewsItem from "./LatestNewsItem/LatestNewsItem"
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {MdKeyboardArrowRight} from "react-icons/md"
-
-const articles = [
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-    {
-        time: "12:30",
-        title: "How to write better copy"
-    },
-]
+import { MdKeyboardArrowRight } from "react-icons/md"
+import axios from "axios"
+import { LatestNewsType, LatestNewsArticle } from "../../types/types";
 
 const LatestNews = () => {
+    const [latestNews, setLatestNews] = useState<LatestNewsType>()
+    const [latestArticles, setLatestArticles] = useState<LatestNewsArticle[]>([])
+    const [page, setPage] = useState<number>(1)
+
+    const newsAPIkey = "32a31292b4574b8d8caf392fd5bfdbf4"
+
+    const fetchLatestNews = (refresh: boolean) => {
+        axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${newsAPIkey}&pageSize=10&page=${page}`)
+            .then(
+                (response) => {
+                    setLatestNews(response.data)
+                    setLatestArticles((prev) => {
+                        if (refresh) {
+                            return [...response.data.articles]
+                        } else {
+                            return [...prev, ...response.data.articles]
+                        }
+                    })
+                }
+            )
+            .catch(
+                (error) => console.log(error)
+            )
+    }
+
+    useEffect(() => {
+        fetchLatestNews(true)
+    }, [])
+
+    const setNext = () => {
+        setPage((prev) => prev + 1);
+        fetchLatestNews(false)
+    }
+
+    const refresetLatestNews = () => {
+        setPage(1);
+        fetchLatestNews(true)
+    }
+
     return (
         <div className='latestNews'>
             <div className="titleContainer">
@@ -62,21 +56,24 @@ const LatestNews = () => {
             </div>
             <div id="latestNewsContainer">
                 <InfiniteScroll
-                    dataLength={articles.length}
-                    next={() => console.log()}
+                    dataLength={latestArticles.length}
+                    next={() => setNext()}
                     loader={<h4>Loading...</h4>}
-                    hasMore={true}
+                    hasMore={Math.ceil((latestNews?.totalResults ?? 0)) / 10 > page}
+                    refreshFunction={() => refresetLatestNews()}
+                    pullDownToRefresh
+                    pullDownToRefreshThreshold={100}
                     scrollableTarget="latestNewsContainer"
                     className="infiniteScroll"
-                    
+
                 >
-                    {articles.map((article) => (
-                        <LatestNewsItem article={article} />
+                    {latestArticles.map((article, i) => (
+                        <LatestNewsItem article={article} key={i} />
                     ))}
                 </InfiniteScroll>
             </div>
             <div className="seeAllContainer">
-                <button className="seeAllNews">See all news <MdKeyboardArrowRight/></button>
+                <button className="seeAllNews">See all news <MdKeyboardArrowRight /></button>
             </div>
         </div>
     )

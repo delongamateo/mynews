@@ -17,7 +17,7 @@ const ArticleCard: FC<ArticleCardProps> = ({ article }) => {
 
     useEffect(() => {
         setIsFavorite(checkFavoritesArticles(article))
-    }, [favoriteArticles, articles])
+    }, [favoriteArticles, articles, article])
 
     const image = multimedia ? multimedia[1].url : placeholderImage
 

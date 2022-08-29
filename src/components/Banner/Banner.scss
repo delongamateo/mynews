@@ -5,7 +5,7 @@
     width: 100%;
     background-color: $red;
     color: white;
-    display: flex;
+    display: none;
     justify-content: center;
 
     .bannerContainerWrap {
@@ -39,6 +39,7 @@
                 border-radius: 6px;
                 font-size: 14px;
                 font-weight: 600;
+                cursor: pointer;
             }
         
             .noButton {
@@ -49,9 +50,14 @@
                 margin-left: 24px;
                 font-size: 14px;
                 font-weight: 600;
+                cursor: pointer;
             }    
         }
     }
+}
+
+.displayBanner {
+    display: flex;
 
     @media screen and (max-width: 768px) {
         display: none;

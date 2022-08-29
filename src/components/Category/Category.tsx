@@ -7,13 +7,13 @@ import { useParams } from "react-router-dom"
 
 const Category = () => {
     const myNewsContext = useContext(MyNewsContext)
-    const { articles, favoriteArticles } = myNewsContext
+    const { articles, favoriteArticles, displayMobileMenu } = myNewsContext
     const [type, setType] = useState<string>("Featured")
 
     const { category } = useParams()
-    
+
     return (
-        <div className='category'>
+        <div className='category' style={{ display: displayMobileMenu === "flex" ? "none" : "flex" }}>
             <p className="categoryTitle">News</p>
             <div className='seTypeButtonsContainer'>
                 <button onClick={() => setType("Featured")} className={`setType ${type === "Featured" ? "selectedType" : ""}`}>Featured</button>

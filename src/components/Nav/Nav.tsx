@@ -7,14 +7,14 @@ import { MyNewsContext } from "../../Context/MyNewsContext"
 
 const Nav = () => {
   const myNewsContext = useContext(MyNewsContext)
-  const {setDisplayMenu} = myNewsContext
+  const {handleMobileMenu} = myNewsContext
   
   return (
     <div className='nav'>
       <div className='navWrap'>
         <div className="logoContainer">
           <p className='my'>My<span className="news">News</span></p>
-          <button onClick={() => setDisplayMenu("flex")} className='hamburgerMenu'><GrMenu /></button>
+          <button onClick={() => handleMobileMenu("flex")} className='hamburgerMenu'><GrMenu /></button>
         </div>
         <SearchBar />
       </div>

@@ -1,28 +1,30 @@
-import { createContext, FC, SetStateAction, useState, Dispatch, useEffect } from "react";
-import { Article, SearchArticle } from "../types/types";
+import { createContext, FC, useState, useEffect, useCallback } from "react";
+import { Article } from "../types/types";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
 export interface MyNewsInterface {
-  favoriteArticles: Article[];
-  setFavoriteArticles: Dispatch<SetStateAction<Article[]>>
-  selectedCategory: string;
-  articles: Article[];
   fetchArticles: (category: string) => void;
+  selectedCategory: string;
+
+  searchArticles: Article[];
+  articles: Article[];
+  handleSearch: (term: string) => void;
+
+  favoriteArticles: Article[];
+
   handleFavoriteArticles: (article: Article) => void;
   checkFavoritesArticles: (article: Article) => number;
-  setSearchQuery: Dispatch<SetStateAction<string>>;
-  searchArticles: Article[];
-  displayMenu: string;
-  setDisplayMenu: Dispatch<SetStateAction<string>>;
-  handleSearch: (term: string) => void;
-  searchQuery: string;
+
+  displayMobileMenu: string;
+  handleMobileMenu: (display: string) => void;
+
   article: Article | undefined;
   handleArticleDetail: (article: Article) => void;
 
 }
 
-export const MyNewsContext = createContext<MyNewsInterface>(undefined as any)
+export const MyNewsContext = createContext<MyNewsInterface>({} as MyNewsInterface)
 
 type MyNewsProviderProps = {
   children: JSX.Element
@@ -30,32 +32,22 @@ type MyNewsProviderProps = {
 
 const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("home")
-  const [searchQuery, setSearchQuery] = useState<string>("")
   const [favoriteArticles, setFavoriteArticles] = useState<Article[]>([])
   const [articles, setArticles] = useState<Article[]>([])
   const [searchArticles, setSearchArticles] = useState<Article[]>([])
-  const [displayMenu, setDisplayMenu] = useState<string>("none")
+  const [displayMobileMenu, setDisplayMobileMenu] = useState<string>("none")
   const [article, setArticle] = useState<Article>()
 
   const navigate = useNavigate()
 
   const NYTapiKey = "ASGupdl6gvvEGxabXeEe8vnqmA7XlPuZ"
-  const newsAPIkey = "32a31292b4574b8d8caf392fd5bfdbf4"
 
-  const fetchArticles = (category: string) => {
+  const fetchArticles = useCallback((category: string) => {
+
     setSelectedCategory(category)
+
     if (category === "favorites") {
       navigate("/favorites")
-    } else if (category === "search") {
-      /* axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchQuery}&api-key=${NYTapiKey}`)
-        .then(
-          (response) => setSearchArticles(response.data.response.docs)
-        ).then(
-          () => navigate(`/search/${searchQuery}`)
-        )
-        .catch(
-          (error) => console.log(error)
-        ) */
     } else {
       axios.get(`https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${NYTapiKey}`)
         .then(
@@ -70,8 +62,13 @@ const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
           (error) => console.log(error)
         )
     }
-    setDisplayMenu("none")
-  }
+
+    setDisplayMobileMenu("none")
+  }, [navigate])
+
+  useEffect(() => {
+    fetchArticles(selectedCategory)
+  }, [fetchArticles, selectedCategory])
 
   const handleSearch = (term: string) => {
     let updatedArticles = searchArticles;
@@ -79,10 +76,6 @@ const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
     )
     setArticles(updatedArticles)
   }
-
-  useEffect(() => {
-    fetchArticles(selectedCategory)
-  }, [])
 
   const checkFavoritesArticles = (article: Article) => {
     const isFavorite = favoriteArticles.findIndex((favoriteArticle) => favoriteArticle.title === article.title)
@@ -103,22 +96,23 @@ const MyNewsProvider: FC<MyNewsProviderProps> = ({ children }) => {
     navigate(`/${selectedCategory}/${article.published_date}`)
   }
 
+  const handleMobileMenu = (display: string) => {
+    setDisplayMobileMenu(display)
+  }
+
   return (
-    <MyNewsContext.Provider 
-      value={{ 
-        articles, 
-        selectedCategory, 
-        fetchArticles, 
-        favoriteArticles, 
-        setFavoriteArticles, 
-        handleFavoriteArticles, 
-        checkFavoritesArticles, 
-        setSearchQuery, 
-        searchArticles, 
-        displayMenu, 
-        setDisplayMenu, 
-        handleSearch, 
-        searchQuery,
+    <MyNewsContext.Provider
+      value={{
+        articles,
+        selectedCategory,
+        fetchArticles,
+        favoriteArticles,
+        handleFavoriteArticles,
+        checkFavoritesArticles,
+        searchArticles,
+        displayMobileMenu,
+        handleMobileMenu,
+        handleSearch,
         article,
         handleArticleDetail
       }}
