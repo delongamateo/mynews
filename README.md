@@ -1,10 +1,15 @@
-# Getting Started with Create React App
+# MyNews - app for reading latest news
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+For building this app I used React with TypeScript. App doesnt have complex state so I decide to use Context for state managment. Used axios for fetching data and SCSS for styling. Decided to implement bookmarking favorite article by adding button with heart icon in top corner of article card. To make it more intuitive for user heart icon is filled for bookmarked articles and outlined for non bookmarked.
+
+Deployed version: https://mynewsmd.netlify.app/
 
 ## Available Scripts
-
 In the project directory, you can run:
+
+### `yarn`
+
+Install packages
 
 ### `yarn start`
 
