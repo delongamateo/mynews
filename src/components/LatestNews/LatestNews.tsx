@@ -59,13 +59,12 @@ const LatestNews = () => {
                     dataLength={latestArticles.length}
                     next={() => setNext()}
                     loader={<h4>Loading...</h4>}
-                    hasMore={Math.ceil((latestNews?.totalResults ?? 0)) / 10 > page}
+                    hasMore={Math.ceil((latestNews?.totalResults ?? 0) / 10) > page}
                     refreshFunction={() => refresetLatestNews()}
                     pullDownToRefresh
                     pullDownToRefreshThreshold={100}
                     scrollableTarget="latestNewsContainer"
                     className="infiniteScroll"
-
                 >
                     {latestArticles.map((article, i) => (
                         <LatestNewsItem article={article} key={i} />

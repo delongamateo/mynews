@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useState, useMemo } from 'react'
 import "./Category.scss"
 import ArticleCard from "../ArticleCard/ArticleCard"
 import LatestNews from '../LatestNews/LatestNews'
@@ -12,6 +12,12 @@ const Category = () => {
 
     const { category } = useParams()
 
+    const memoedArticles = useMemo(() => {
+        return (category !== "favorites" ? articles : favoriteArticles)?.map((article, i) => (
+            <ArticleCard article={article} key={i} />
+        ))
+    }, [articles, favoriteArticles, category])
+
     return (
         <div className='category' style={{ display: displayMobileMenu === "flex" ? "none" : "flex" }}>
             <p className="categoryTitle">News</p>
@@ -20,16 +26,12 @@ const Category = () => {
                 <button onClick={() => setType("Latest")} className={`setType ${type === "Latest" ? "selectedType" : ""}`}>Latest</button>
             </div>
             <div className='articlesContainerDesktop'>
-                {(category !== "favorites" ? articles : favoriteArticles)?.map((article, i) => (
-                    <ArticleCard article={article} key={i} />
-                ))}
+                {memoedArticles}
                 <LatestNews />
             </div>
             <div className='articlesContainerMobile'>
                 <div className={`articleCardsContainer ${type === "Latest" ? "hideType" : ""}`}>
-                    {(category !== "favorites" ? articles : favoriteArticles)?.map((article, i) => (
-                        <ArticleCard article={article} key={i} />
-                    ))}
+                    {memoedArticles}
                 </div>
                 <div className={`${type === "Featured" ? "hideType" : ""}`}>
                     <LatestNews />
